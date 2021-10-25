@@ -26,10 +26,18 @@
 						<span class="text-blue-500">Leave</span>Flow
 					</div>
 				</div>
-				<div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+				<div class="hidden sm:ml-6 sm:flex sm:space-x-4">
 					<x-navigation.nav.link
 						routeName="dashboard" 
 						label="Book Time Off" 
+					/>
+					<x-navigation.nav.link
+						routeName="leave.index" 
+						label="My Leaves" 
+					/>
+					<x-navigation.nav.link
+						routeName="leave.management" 
+						label="Leaves to Approve" 
 					/>
 				</div>
 			</div>
@@ -43,21 +51,23 @@
 						</button>
 					</div>
 					
-					<div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" tabindex="-1"
+					<div class="z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" tabindex="-1"
 						x-show="showProfileDropdown" 
-						x-transition:enter="transition ease-out duration-200"
-						x-transition:enter-start="transform opacity-0 scale-95"
-						x-transition:enter-end="transform opacity-100 scale-100"
-						x-transition:leave="transition ease-in duration-75"
-						x-transition:leave-start="transform opacity-100 scale-100"
-						x-transition:leave-end="transform opacity-0 scale-95"
+						x-transition:enter="erase-out duration-200"
+						x-transition:enter-start="opacity-0 scale-95"
+						x-transition:enter-end="opacity-100 scale-100"
+						x-transition:leave="ease-in duration-75"
+						x-transition:leave-start="opacity-100 scale-100"
+						x-transition:leave-end="opacity-0 scale-95"
+						@click.away="showProfileDropdown = false" 
+						x-cloak
 					>
 					
 						<!-- Active: "bg-gray-100", Not Active: "" -->
-						<a href="#" class="block px-4 py-2 text-sm text-gray-700" tabindex="-1">Your Profile</a>
-						<a href="#" class="block px-4 py-2 text-sm text-gray-700" tabindex="-1">Settings</a>
+						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Your Profile</a>
+						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200" >Settings</a>
 						<form action="{{ route('logout') }}" method="POST">
-							<button type="submit" class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-200" tabindex="-1">
+							<button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-200" tabindex="-1">
 								Sign out
 							</button>
 						</form>

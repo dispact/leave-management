@@ -1,6 +1,6 @@
 @props(['mobile' => false, 'routeName', 'label'])
 @if(!$mobile)
-<a href="{{ route($routeName) }}" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 font-medium text-sm
+<a href="{{ route($routeName) }}" class="inline-flex items-center px-1 pt-1 border-b-2 font-medium text-sm
     @if(request()->route()->named($routeName)) 
     border-blue-500 text-gray-900
     @else
