@@ -1,7 +1,7 @@
 <div x-data="
 	{ 
-		show: true, 
-		type: 'success',
+		show: @entangle('show'), 
+		type: @entangle('type'),
 		timer: null,
 
 		beginTimeout() {

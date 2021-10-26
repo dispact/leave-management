@@ -24,7 +24,7 @@
 			{{ $slot }}
 		</main>
 
-		{{-- <x-alert message="test" color="green" /> --}}
+		<livewire:alert />
 		@livewireScripts
 	</body>
 	{{ $scripts ?? '' }}

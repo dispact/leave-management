@@ -35,10 +35,13 @@
 						routeName="leave.index" 
 						label="My Leaves" 
 					/>
+					@can('approval.read')
 					<x-navigation.nav.link
-						routeName="leave.management" 
+						routeName="approval.index" 
 						label="Leaves to Approve" 
 					/>
+					@endcan
+					
 				</div>
 			</div>
 			<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -64,9 +67,9 @@
 					>
 					
 						<!-- Active: "bg-gray-100", Not Active: "" -->
-						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Your Profile</a>
-						<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200" >Settings</a>
+						<a href="{{ route('settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200" >Settings</a>
 						<form action="{{ route('logout') }}" method="POST">
+							@csrf
 							<button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-200" tabindex="-1">
 								Sign out
 							</button>

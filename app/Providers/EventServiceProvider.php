@@ -18,17 +18,14 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'App\Events\Event' => [
-            'App\Listeners\EventListener'
+        'App\Events\LeaveWasCreated' => [
+            'App\Listeners\Logger'
         ],
-        'leave.created' => [
-            'App\Events\LeaveEvent@leaveCreated'
+        'App\Events\LeaveWasApproved' => [
+            'App\Listeners\Logger'
         ],
-        'leave.approved' => [
-            'App\Events\LeaveEvent@leaveApproved'
-        ],
-        'leave.denied' => [
-            'App\Events\LeaveEvent@leaveDenied'
+        'App\Events\LeaveWasDenied' => [
+            'App\Listeners\Logger'
         ]
     ];
 

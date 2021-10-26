@@ -1,5 +1,5 @@
 <x-app-layout>
 	<div class="px-2 py-4 w-full max-w-4xl">
-		<livewire:leaves />    
+		<livewire:approvals />
 	</div>
 </x-app-layout>

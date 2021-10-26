@@ -65,6 +65,11 @@ class BookingForm extends Component
 			$this->endDate = $this->startDate;
 	}
 
+	public function clearDate() {
+		$this->startDate = '';
+		$this->endDate = '';
+	}
+
 	public function submit() {
 		$this->singleDay();
 		$this->correctTime();
@@ -81,13 +86,21 @@ class BookingForm extends Component
 			'end_date' => 'required'
 		])->validate();
 
-		Leave::create([
-			'user_id' => Auth::id(),
-			'leave_type_id' => $validated['leave_type'],
-			'duration_id' => $validated['duration'],
-			'start_date' => Carbon::parse($validated['start_date'] . ' ' . $this->startTime),
-			'end_date' => Carbon::parse($validated['end_date'] . ' ' . $this->endTime)
-		]);
+		try {
+			Leave::create([
+				'user_id' => Auth::id(),
+				'leave_type_id' => $validated['leave_type'],
+				'duration_id' => $validated['duration'],
+				'start_date' => Carbon::parse($validated['start_date'] . ' ' . $this->startTime),
+				'end_date' => Carbon::parse($validated['end_date'] . ' ' . $this->endTime)
+			]);
+
+			$this->emit('flashSuccess', 'Your time off request has been submitted');
+			$this->clearDate();
+		} catch (\exception $e) {
+			$this->emit('flashError', 'Error creating leave');
+			Log::error($e);
+		}
 	}
 
 	public function render()

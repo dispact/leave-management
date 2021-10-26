@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Enums\StatusType;
+use App\Events\LeaveWasDenied;
+use App\Events\LeaveWasCreated;
+use App\Events\LeaveWasApproved;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,15 +25,15 @@ class Leave extends Model
         parent::boot();
 
         static::created(function($leave) {
-            Event::dispatch('leave.created', $leave);
+            LeaveWasCreated::dispatch($leave);
         });
 
         static::updated(function($leave) {
             if($leave->status == StatusType::APPROVED)
-                Event::dispatch('leave.approved', $leave);
+                LeaveWasApproved::dispatch($leave);
                 
             if($leave->status == StatusType::DENIED)
-                Event::dispatch('leave.denied', $leave);
+                LeaveWasDenied::dispatch($leave);
         });
     }
 

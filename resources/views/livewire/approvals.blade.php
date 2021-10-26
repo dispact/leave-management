@@ -1,6 +1,7 @@
 <div class="flex flex-col">
 	<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 		<div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+			@if($leaves->total())
 			<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
 				<table class="min-w-full divide-y divide-gray-200">
 					<thead class="bg-gray-50">
@@ -63,20 +64,20 @@
 									@endif
 								</div>
 							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-1">
+							<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+								@can('approval.write')
 								<button class="text-green-600 hover:text-green-900"
 									wire:click="approve({{ $leave->id }})" 
 								>
 									Approve
 								</button>
-								<span>
-									|
-								</span>
+					
 								<button class="text-red-600 hover:text-red-900"
 									wire:click="deny({{ $leave->id }})"
 								>
 									Deny
 								</button>
+								@endcan
 							</td>
 						</tr>
 						@endforeach
@@ -84,6 +85,14 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="p-2">
+				{{ $leaves->links() }}
+			</div>
+			@else
+			<h2 class="text-xl font-medium text-center pt-6">
+				You have no leaves to approve. 
+			</h2>
+			@endif
 		</div>
 	</div>
 </div>

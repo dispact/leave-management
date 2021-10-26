@@ -11,5 +11,6 @@
       minDate: moment().toDate()
    })"
    type="text"
+   class="date-input"
    {{ $attributes }}
 >

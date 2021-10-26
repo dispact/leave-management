@@ -19,8 +19,7 @@
 							type="button"
 						>
 							<div class="flex items-center">
-								<span class="bg-gray-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"></span>
-								<span class="ml-3 block truncate">
+								<span class="ml-1 block truncate">
 									{{ $currentLeave->name }}
 								</span>
 							</div>
@@ -32,7 +31,7 @@
 							</span>
 						</button>
 
-						<ul class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-10 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3"
+						<ul class="dropdown"
 							x-show="showLeaveTypeDropdown"
 							x-transition:enter="transition ease-in duration-100"
 							x-transition:enter-start="opacity-0"
@@ -50,7 +49,7 @@
 									@if($leave->name == $currentLeave->name) text-white bg-blue-600 @else text-gray-900 @endif"
 							>
 								<div class="flex items-center">
-									<span class="bg-gray-400 flex-shrink-0 inline-block h-2 w-2 rounded-full" aria-hidden="true"></span>
+									
 									<!-- Selected: "font-semibold", Not Selected: "font-normal" -->
 									<span class="ml-3 block truncate
 										@if($leave->name == $currentLeave->name) font-semibold @else font-normal @endif"
@@ -80,7 +79,7 @@
 					</label>
 					<div class="mt-1 relative">
 						<button @click="showLeaveDurationDropdown = !showLeaveDurationDropdown" type="button" class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
-							<span class="block truncate">
+							<span class="ml-1 block truncate">
 								{{ $currentDuration->name }}
 							</span>
 							<span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -91,7 +90,7 @@
 							</span>
 						</button>
 
-						<ul class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-10 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3"
+						<ul class="dropdown"
 							x-show="showLeaveDurationDropdown" 
 							x-transition:enter="transition ease-in duration-100"
 							x-transition:enter-start="opacity-0"
@@ -141,7 +140,7 @@
 						<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
 							<svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
 						</div>
-						<x-form.datepicker class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+						<x-form.datepicker 
 							wire:model="startDate" 
 							placeholder="Select date"
 						/>
@@ -153,19 +152,25 @@
 					<label id="listbox-label" class="block text-sm font-medium text-gray-700">
 						Date Range
 					</label> 
-					<div date-rangepicker class="flex items-center">
+					<div class="flex items-center">
 						<div class="mt-1 relative">
 							<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
 								<svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
 							</div>
-							<x-form.datepicker wire:model="startDate" class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Start date" />
+							<x-form.datepicker 
+								wire:model="startDate" 
+								placeholder="Start date" 
+							/>
 						</div>
 						<span class="mx-2 text-gray-500">to</span>
 						<div class="relative">
 							<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
 								<svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
 							</div>
-							<x-form.datepicker wire:model="endDate" class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="End date" />
+							<x-form.datepicker 
+								wire:model="endDate" 
+								placeholder="End date" 
+							/>
 						</div>
 					</div>
 				</div>
@@ -176,14 +181,18 @@
 					<label id="listbox-label" class="block text-sm font-medium text-gray-700">
 						Time Range
 					</label> 
-					<div date-rangepicker class="flex items-center">
+					<div class="flex items-center">
 						<div class="mt-1 relative">
 							<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
 								</svg>
 							</div>
-							<input type="time" wire:model="startTime" class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"/>
+							<input 
+								class="date-input" 
+								type="time" 
+								wire:model="startTime"
+							/>
 						</div>
 						<span class="mx-2 text-gray-500">to</span>
 						<div class="relative">
@@ -192,7 +201,11 @@
 									<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
 								</svg>
 							</div>
-							<input type="time" wire:model="endTime" class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" />
+							<input 
+								class="date-input" 
+								type="time" 
+								wire:model="endTime"
+							/>
 						</div>
 					</div>
 				</div>
@@ -202,6 +215,10 @@
 		</div>
 		<div class="px-4 py-3 bg-gray-50 rounded-b-lg sm:px-6">
 			<button type="submit" class="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+				<svg wire:loading wire:target="submit" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+					<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+					<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+				</svg>
 				Book Time Off
 			</button>
 		</div>
