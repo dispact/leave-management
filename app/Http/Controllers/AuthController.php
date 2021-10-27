@@ -28,6 +28,8 @@ class AuthController extends Controller
 		$socialUser = Socialite::driver('google')->user();
 		$user = User::where('auth_id', $socialUser->id)->first();
 
+		session(['Authorization' => 'Bearer '. $socialUser->token]);
+
 		if ($user) {
 			Auth::login($user);
 			return redirect('/');
@@ -38,6 +40,8 @@ class AuthController extends Controller
 					'image' => $socialUser->avatar,
 					'auth_id' => $socialUser->id
 			]);
+
+			$newUser->assignRole('user');
 
 			Auth::login($newUser);
 			return redirect('/');

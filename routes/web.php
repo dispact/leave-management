@@ -18,9 +18,17 @@ Route::middleware(['auth'])->group(function() {
         ->get('/leaves', [LeaveController::class, 'index'])
         ->name('leave.index');
 
-    Route::get('/settings', function() {
-        return view('settings');
-    })->name('settings');
+    Route::middleware(['permission:users.read'])
+        ->get('/users', function() {
+            return view('users.index');
+        })
+        ->name('user.index');
+
+    Route::middleware(['permission:settings.read'])
+        ->get('/settings', function() {
+            return view('settings');
+        })
+        ->name('settings');
 
     Route::get('/placeholder', function() {
         return  'placeholder link';

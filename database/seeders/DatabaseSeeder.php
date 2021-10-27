@@ -42,6 +42,9 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'users.read'])->syncRoles([$administrator]);
         Permission::create(['name' => 'users.write'])->syncRoles([$administrator]);
 
+        Permission::create(['name' => 'settings.read'])->syncRoles([$administrator]);
+        Permission::create(['name' => 'settings.write'])->syncRoles([$administrator]);
+
         DB::table('model_has_roles')->insert([
             'role_id' => '3', 'model_type' => 'App\Models\User', 'model_id' => '1'
         ]);

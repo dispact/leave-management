@@ -24,6 +24,7 @@ class BookingForm extends Component
 	public $endTime = '15:00';
 
 	public function mount() {
+		var_dump(session('Authorization'));
 		$this->leaveTypes = Cache::remember('leave_types', 3600, function () { 
 			return LeaveType::all();
 	  	});
@@ -91,8 +92,8 @@ class BookingForm extends Component
 				'user_id' => Auth::id(),
 				'leave_type_id' => $validated['leave_type'],
 				'duration_id' => $validated['duration'],
-				'start_date' => Carbon::parse($validated['start_date'] . ' ' . $this->startTime),
-				'end_date' => Carbon::parse($validated['end_date'] . ' ' . $this->endTime)
+				'start_date' => Carbon::parse($validated['start_date'] . ' ' . $this->startTime)->toRfc3339String(),
+				'end_date' => Carbon::parse($validated['end_date'] . ' ' . $this->endTime)->toRfc3339String()
 			]);
 
 			$this->emit('flashSuccess', 'Your time off request has been submitted');
