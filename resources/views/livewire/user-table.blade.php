@@ -25,7 +25,7 @@
 					<tbody class="bg-white divide-y divide-gray-200">
 						@foreach($users as $user)
 						<tr>
-							<td class="px-6 py-4 whitespace-nowrap">
+							<td class="px-4 py-3 whitespace-nowrap">
 								<div class="flex items-center">
 									<div class="flex-shrink-0 h-10 w-10">
 										<img class="h-10 w-10 rounded-full" 
@@ -41,27 +41,19 @@
 									</div>
 								</div>
 							</td>
-							<td class="px-6 py-4 text-center">
-								<div>
-									<select class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-										<option selected hidden>-</option>
-										@foreach($supervisors as $supervisor)
-										<option value="{{ $supervisor->id }}">{{ $supervisor->name }}</option>
-										@endforeach
-									</select>
-								 </div>
+							<td class="px-4 py-3 text-center">
+								{{ $user->approver->name ?? '-' }}
 							</td>
 
-							<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+							<td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 text-center">
 								{{ ucwords($user->roles[0]->name) }}
 							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-								<a href="#" class="text-delete-600 hover:text-delete-900">Delete</a>
+							<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium space-x-2">
+								<a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
+								<a href="#" class="text-red-600 hover:text-red-900">Delete</a>
 							</td>
 						</tr>
 						@endforeach
-
-						<!-- More people... -->
 					</tbody>
 				</table>
 			</div>

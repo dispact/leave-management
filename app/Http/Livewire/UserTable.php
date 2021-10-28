@@ -24,6 +24,10 @@ class UserTable extends Component
         );
     }
 
+    public function change() {
+        return $this;
+    }
+
     public function render()
     {
         return view('livewire.user-table', [
