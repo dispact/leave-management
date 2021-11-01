@@ -35,13 +35,14 @@ class AuthController extends Controller
 			return redirect('/');
 		} else {
 			$newUser = User::create([
-					'name' => $socialUser->name,
-					'email' => $socialUser->email,
-					'image' => $socialUser->avatar,
-					'auth_id' => $socialUser->id
+				'name' => $socialUser->name,
+				'email' => $socialUser->email,
+				'image' => $socialUser->avatar,
+				'auth_id' => $socialUser->id
 			]);
 
-			$newUser->assignRole('user');
+			if(!$newUser->hasAnyRole(['supervisor', 'administrator']))
+				$newUser->syncRoles(['user']);
 
 			Auth::login($newUser);
 			return redirect('/');

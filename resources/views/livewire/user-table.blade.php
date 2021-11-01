@@ -1,4 +1,3 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <div class="flex flex-col" x-data="{
 	showApproverDropdown: false
 }">
@@ -41,16 +40,35 @@
 									</div>
 								</div>
 							</td>
-							<td class="px-4 py-3 text-center">
-								{{ $user->approver->name ?? '-' }}
+							<td class="px-4 py-3 text-center text-sm text-gray-600">
+								<select wire:change="changeApprover({{ $user->id }}, $event.target.value)" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+									<option hidden>Select a Supervisor</option>
+									@foreach($allSupervisors as $supervisor)
+									<option value="{{ $supervisor->id }}"
+										@if($user->approver_id == $supervisor->id) selected @endif
+									>
+										{{ $supervisor->name }}
+									</option>
+									@endforeach
+								</select>
 							</td>
 
-							<td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 text-center">
-								{{ ucwords($user->roles[0]->name) }}
+							<td class="px-4 py-3 whitespace-nowrap text-sm text-gray-600">
+								<select wire:change="changeRole({{ $user->id }}, $event.target.value)" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+									<option hidden>Select a Role</option>
+									@foreach($allRoles as $role)
+									<option value="{{ $role->id }}"
+										@if($user->hasRole($role)) selected @endif
+									>
+										{{ ucwords($role->name) }}
+									</option>
+									@endforeach
+								</select>
 							</td>
-							<td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium space-x-2">
-								<a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
-								<a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+							<td class="px-4 py-3 whitespace-nowrap text-center text-sm font-medium space-x-2">
+								<button wire:click="deleteUser({{ $user->id }})" class="text-red-600 hover:text-red-900">
+									Delete
+								</button>
 							</td>
 						</tr>
 						@endforeach

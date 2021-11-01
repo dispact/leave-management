@@ -21,7 +21,7 @@ class Approvals extends Component
             );
 
         if ($response->ok()) {
-            $leave->update(['status' => StatusType::APPROVED]);
+            $leave->update(['status' => StatusType::APPROVED, 'approved_by' => auth()->id()]);
             $this->emit('flashSuccess', $leave->user->name . '\'s ' . $leave->leave_type->name . ' time has been approved');
             // add to calendar listener under leave approved event
         } else {
