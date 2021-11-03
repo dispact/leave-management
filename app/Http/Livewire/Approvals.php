@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
 use App\Models\Leave;
+use App\Models\Setting;
 use Livewire\Component;
 use App\Enums\StatusType;
 use Livewire\WithPagination;
@@ -16,7 +18,7 @@ class Approvals extends Component
         $leave = Leave::where('id', $id)->first();
   
         $response = Http::withToken('Authorization', session('Authorization'))
-            ->post('https://www.googleapis.com/calendar/v3/calendars/' . env('GOOGLE_CALENDAR_ID') . '/events', 
+            ->post('https://www.googleapis.com/calendar/v3/calendars/' . Setting::get('googleCalendarId') . '/events', 
                 $this->calendarEventDetails($leave)
             );
 
@@ -37,8 +39,8 @@ class Approvals extends Component
 
     public function calendarEventDetails(Leave $leave) {
         $summary =  $leave->user->name . ' ' . $leave->leave_type->name . ' Time';
-        $start = \Carbon\Carbon::parse($leave->start_date)->isoFormat('YYYY-MM-DD');
-        $end = \Carbon\Carbon::parse($leave->end_date)->addDay()->isoFormat('YYYY-MM-DD');
+        $start = Carbon::parse($leave->start_date)->isoFormat('YYYY-MM-DD');
+        $end = Carbon::parse($leave->end_date)->addDay()->isoFormat('YYYY-MM-DD');
         $timeZone = config('app.timezone');
 
         return [
