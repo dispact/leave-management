@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\DayType;
+use App\Models\Setting;
 use App\Models\Duration;
 use App\Models\LeaveType;
 use Illuminate\Database\Seeder;
@@ -48,5 +49,8 @@ class DatabaseSeeder extends Seeder
         DB::table('model_has_roles')->insert([
             'role_id' => '3', 'model_type' => 'App\Models\User', 'model_id' => '1'
         ]);
+
+        Setting::create(['key' => 'googleCalendarId']);
+        Setting::create(['key' => 'defaultApprover']);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -38,7 +39,8 @@ class AuthController extends Controller
 				'name' => $socialUser->name,
 				'email' => $socialUser->email,
 				'image' => $socialUser->avatar,
-				'auth_id' => $socialUser->id
+				'auth_id' => $socialUser->id,
+				'approver_id' => Setting::get('defaultApprover')
 			]);
 
 			if(!$newUser->hasAnyRole(['supervisor', 'administrator']))
