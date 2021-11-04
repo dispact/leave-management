@@ -26,19 +26,10 @@
 						<tr>
 							<td class="px-6 py-4 whitespace-nowrap text-center">
 								<div class="text-sm text-gray-900">
-									@if($leave->duration->isSingleDayType() && $leave->duration->checkDayType('Single'))
-										{{ $leave->getStartDate() }}
-									@elseif($leave->duration->isMultipleDayType())
-										<div class="block">
-											{{ $leave->getStartDate() }} - {{ $leave->getEndDate() }}
-										</div>
+									@if($leave->duration->isMultipleDayType())
+										{{ $leave->getStartDate() }} - {{ $leave->getEndDate() }}
 									@else
-									<div class="block">
 										{{ $leave->getStartDate() }}
-									</div>
-									<div class="block">
-										{{ $leave->getStartTime() }} - {{ $leave->getEndTime() }}
-									</div>
 									@endif
 								</div>
 							</td>
@@ -46,7 +37,7 @@
 								{{ $leave->leave_type->name }}
 							</td>
 							<td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-900">
-								{{ $leave->duration->name }}
+								{{ $leave->duration->name }} @if(!$leave->duration->checkDayType('Single') && !$leave->duration->checkDayType('Multiple')) ({{ $leave->getStartTime() }} - {{ $leave->getEndTime() }}) @endif
 							</td>
 							<td class="px-6 py-4 whitespace-nowrap text-center">
 								<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ $leave->status->color() }}-100 text-{{ $leave->status->color() }}-800">

@@ -9,6 +9,7 @@ use App\Enums\DayType;
 use Livewire\Component;
 use App\Models\Duration;
 use App\Models\LeaveType;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +25,7 @@ class BookingForm extends Component
 	public $endTime = '15:00';
 
 	public function mount() {
-		var_dump(session('Authorization'));
+		// var_dump(session('Authorization'));
 		$this->leaveTypes = Cache::remember('leave_types', 3600, function () { 
 			return LeaveType::all();
 	  	});
@@ -87,13 +88,25 @@ class BookingForm extends Component
 			'end_date' => 'required'
 		])->validate();
 
+		$startDate = Carbon::parse($validated['start_date'] . ' ' . $this->startTime)->toRfc3339String();
+		$endDate = Carbon::parse($validated['end_date'] . ' ' . $this->endTime)->toRfc3339String();
+
+
+		if (Leave::where('user_id', Auth::id())
+				->where('start_date', $startDate)
+				->orWhere('end_date', $endDate)
+				->exists()
+		) {
+			return $this->emit('flashError', 'You already have a leave scheduled during this time.');
+		}
+
 		try {
 			Leave::create([
 				'user_id' => Auth::id(),
 				'leave_type_id' => $validated['leave_type'],
 				'duration_id' => $validated['duration'],
-				'start_date' => Carbon::parse($validated['start_date'] . ' ' . $this->startTime)->toRfc3339String(),
-				'end_date' => Carbon::parse($validated['end_date'] . ' ' . $this->endTime)->toRfc3339String()
+				'start_date' => $startDate,
+				'end_date' => $endDate
 			]);
 
 			$this->emit('flashSuccess', 'Your time off request has been submitted');
@@ -101,6 +114,7 @@ class BookingForm extends Component
 		} catch (\exception $e) {
 			$this->emit('flashError', 'Error creating leave');
 			Log::error($e);
+			dd($e);
 		}
 	}
 

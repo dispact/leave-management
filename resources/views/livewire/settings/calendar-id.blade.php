@@ -1,6 +1,6 @@
 <x-settings.template 
 	header="Google Calendar ID" 
-	subHeader="You can find your Google Calendar ID in your calendar settings. Your Calendar will also need to be made public."
+	subHeader="You can find your Google Calendar ID in your calendar settings"
 	label="Calendar ID"
 >
 	<x-slot name="input">

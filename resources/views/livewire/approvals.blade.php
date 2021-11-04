@@ -44,7 +44,7 @@
 								{{ $leave->leave_type->name }}
 							</td>
 							<td class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-900">
-								{{ $leave->duration->name }}
+								{{ $leave->duration->name }} 
 							</td>
 							<td class="px-6 py-4 whitespace-nowrap text-center">
 								<div class="text-sm text-gray-900">

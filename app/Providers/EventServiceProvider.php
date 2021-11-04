@@ -2,10 +2,20 @@
 
 namespace App\Providers;
 
+use App\Events\LeaveWasDenied;
+use App\Events\LeaveWasCreated;
+use App\Events\LeaveWasApproved;
+
+use App\Listeners\Logger;
+use App\Listeners\Leaves\SendApprovedMail;
+use App\Listeners\Leaves\SendDeniedMail;
+use App\Listeners\Leaves\SendCreatedMail;
+
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,14 +28,17 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'App\Events\LeaveWasCreated' => [
-            'App\Listeners\Logger'
+        LeaveWasCreated::class => [
+            Logger::class,
+            SendCreatedMail::class
         ],
-        'App\Events\LeaveWasApproved' => [
-            'App\Listeners\Logger'
+        LeaveWasApproved::class => [
+            Logger::class,
+            SendApprovedMail::class
         ],
-        'App\Events\LeaveWasDenied' => [
-            'App\Listeners\Logger'
+        LeaveWasDenied::class => [
+            Logger::class,
+            SendDeniedMail::class
         ]
     ];
 
