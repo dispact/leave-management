@@ -16,7 +16,7 @@ class Leaves extends Component
         return view('livewire.leaves', [
             'leaves' => Leave::where('user_id', Auth::id())
                 ->with(['leave_type', 'duration'])
-                ->orderBy('updated_at', 'DESC')
+                ->orderBy('start_date', 'DESC')
                 ->paginate(8)
         ]);
     }

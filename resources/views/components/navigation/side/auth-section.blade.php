@@ -17,18 +17,15 @@
 </div>
 <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
 	<div class="flex-shrink-0 w-full group block">
-		<a href="#" class="flex items-center">
+		<div class="flex items-center cursor-default">
 			<img class="inline-block @if(!$collapsed) h-9 w-9 @else h-8 w-8 @endif rounded-full" src="{{ auth()->user()->image }}" alt="{{ auth()->user()->name }}">
 			@if(!$collapsed)
 				<div class="ml-3">
 					<p class="@if($mobile) text-base @else text-sm @endif font-medium text-gray-700 group-hover:text-gray-900">
 						{{ auth()->user()->name }}
 					</p>
-					<p class="@if($mobile) text-base @else text-xs @endif font-medium text-gray-500 group-hover:text-gray-700">
-						View Profile
-					</p>
 				</div>
 			@endif
-		</a>
+		</div>
 	</div>
 </div>

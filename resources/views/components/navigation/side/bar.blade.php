@@ -1,10 +1,11 @@
-<div class="h-screen flex overflow-hidden bg-gray-100" x-data="{
-	showDesktopSidebar: true,
-	showCollapsedDesktopSidebar: false,
-	showMobileSidebar: false,
-	showLeaveTypeDropdown: false,
-	showLeaveDurationDropdown: false,
-}">
+<div class="h-screen flex overflow-hidden bg-gray-100" 
+	x-data="{
+		showDesktopSidebar: true,
+		showMobileSidebar: false,
+		showLeaveTypeDropdown: false,
+		showLeaveDurationDropdown: false,
+	}"
+>
 	<!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
 	<div class="fixed inset-0 flex z-40 md:hidden" 
 		role="dialog" 
@@ -65,8 +66,8 @@
 
 			<div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
 				<div class="flex-shrink-0 flex items-center px-4">
-					<div class="font-medium text-xl">
-						<span class="text-blue-500">Leave</span>Flow
+					<div class="font-medium text-xl cursor-default">
+						<span class="text-blue-500">Leave</span>Management
 					</div>
 				</div>
 				<nav class="mt-5 px-2 space-y-1">
@@ -82,20 +83,20 @@
 
 	<!-- Static sidebar for desktop -->
 	<div class="hidden md:flex md:flex-shrink-0" x-show="showDesktopSidebar">
-		<div class="flex flex-col" :class="showCollapsedDesktopSidebar ? 'w-16' : 'w-64'">
+		<div class="flex flex-col" :class="$store.collapsedSidebar.on ? 'w-16' : 'w-64'">
 			<!-- Sidebar component, swap this element with another sidebar if you like -->
-			<template x-if="!showCollapsedDesktopSidebar">
+			<template x-if="!$store.collapsedSidebar.on">
 				<div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
 					<div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
 						<div class="flex items-center flex-shrink-0 px-4">
-							<div class="font-medium text-xl ml-1">
-								<span class="text-blue-500">Leave</span>Flow
+							<div class="font-medium text-xl ml-1 cursor-default">
+								<span class="text-blue-500">Leave</span>Management
 							</div>
 						</div>
 						<nav class="mt-5 flex-1 px-2 bg-white space-y-1">
 							<x-navigation.side.links />
 
-							<x-navigation.side.button @click="showCollapsedDesktopSidebar = !showCollapsedDesktopSidebar">
+							<x-navigation.side.button @click="$store.collapsedSidebar.toggle()">
 								<x-slot name="icon">
 									<!-- Heroicon name: outline/chevron-left -->
 									<svg class="text-gray-400 group-hover:text-gray-500 mr-3 ml-1 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -113,18 +114,18 @@
 				</div>
 			</template>
 
-			<template x-if="showCollapsedDesktopSidebar">
+			<template x-if="$store.collapsedSidebar.on">
 				<div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
 					<div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
 						<div class="flex items-center justify-center flex-shrink-0 px-4">
-							<div class="font-medium text-xl">
-								<span class="text-blue-500">L</span>F
+							<div class="font-medium text-xl cursor-default">
+								<span class="text-blue-500">L</span>M
 							</div>
 						</div>
 						<nav class="mt-5 flex-1 justify-center px-2 bg-white space-y-1">
 							<x-navigation.side.links collapsed="true" />
 
-							<x-navigation.side.button @click="showCollapsedDesktopSidebar = !showCollapsedDesktopSidebar">
+							<x-navigation.side.button @click="$store.collapsedSidebar.toggle()">
 								<x-slot name="icon">	
 									<!-- Heroicon name: outline/chevron-right -->
 									<svg class="text-gray-400 group-hover:text-gray-500 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
