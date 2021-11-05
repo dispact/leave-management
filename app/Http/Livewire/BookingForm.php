@@ -114,7 +114,6 @@ class BookingForm extends Component
 		} catch (\exception $e) {
 			$this->emit('flashError', 'Error creating leave');
 			Log::error($e);
-			dd($e);
 		}
 	}
 
