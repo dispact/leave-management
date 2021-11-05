@@ -1,46 +1,42 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\ApprovalController;
+
+Route::get('login', [AuthController::class, 'show'])->name('login');
+Route::get('/auth/redirect', [AuthController::class, 'redirect'])->name('auth.google');
+Route::get('/auth/callback', [AuthController::class, 'callback']);
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/', function() {
         return view('home');
+    })->name('dashboard');
+
+    Route::middleware(['permission:leave.read'])
+        ->get('/leaves', [LeaveController::class, 'index'])
+        ->name('leave.index');
+
+    Route::middleware(['permission:users.read'])
+        ->get('/users', function() {
+            return view('users.index');
+        })
+        ->name('user.index');
+
+    Route::middleware(['permission:settings.read'])
+        ->get('/settings', function() {
+            return view('settings');
+        })
+        ->name('settings');
+
+    Route::get('/placeholder', function() {
+        return  'placeholder link';
+    })->name('placeholder');
+
+    Route::middleware(['permission:approval.read'])->group(function() {
+        Route::get('/approvals', [ApprovalController::class, 'index'])->name('approval.index');
     });
-});
- 
 
-Route::get('login', function() {
-    return view('login');
-})->name('login');
-
-Route::post('logout', function(\Illuminate\Http\Request $request) {
-    \Illuminate\Support\Facades\Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    return redirect('/');
-})->name('logout');
-
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('google')->scopes(['https://www.googleapis.com/auth/calendar'])->redirect();
-})->name('auth.google');
-
-Route::get('/auth/callback', function () {
-    $socialUser = Socialite::driver('google')->user();
-    $user = \App\Models\User::where('auth_id', $socialUser->id)->first();
-
-    if ($user) {
-        \Illuminate\Support\Facades\Auth::login($user);
-        return redirect('/');
-    } else {
-        $newUser = \App\Models\User::create([
-            'name' => $socialUser->name,
-            'email' => $socialUser->email,
-            'image' => $socialUser->avatar,
-            'auth_id' => $socialUser->id
-        ]);
-
-        \Illuminate\Support\Facades\Auth::login($newUser);
-        return redirect('/');
-    }
+    Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
 });

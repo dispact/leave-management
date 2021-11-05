@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('image');
             $table->string('auth_id');
+            $table->foreignId('approver_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
